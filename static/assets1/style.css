@@ -229,7 +229,6 @@ img { max-width: 100%; }
     background-color: var(--primary);
     padding: 16px 0;
     flex-shrink: 0;
-
     position: relative;
     overflow: hidden;
 }
