@@ -295,8 +295,11 @@
                                             -
                                         {{ post.caption }}
                                     </span>
+
+                                    <p>'#hashtag</p>
                                 </div>
 
+                                <span class="post__date-time"><a href=''>{% for tag in post.tags.all%} {% endfor %}</a></span>
                                 <span class="post__date-time">{{ post.created_at }}</span>
                             </div>
                         </div>
