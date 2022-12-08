@@ -8,7 +8,7 @@ import uuid
 # Create your models here.
 
 # uploading user files to a specific directory
-def user_directory_path(insatmce, filename):
+def user_directory_path(instance, filename):
     return 'user_{0}/{1}'.format(instance.user.id, filename)
 
 class Tag(models.Model):
@@ -51,7 +51,7 @@ class Follow(models.Model):
     following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
 
 class Stream(models.Model):
-    follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='stream_following')
+    following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='stream_following', default=None)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='stream_user')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
     date = models.DateTimeField()
