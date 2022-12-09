@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     #own
     'post',
+    'userauth', 
     'crispy_forms'
 ]
 

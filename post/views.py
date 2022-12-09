@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+from userauth.models import Profile
 from .models import Tag, Stream, Follow, Post, Like
 from .forms import NewPostForm
 # Create your views here.
@@ -77,4 +78,14 @@ def like(request, post_id):
     post.likes = current_likes
     post.save()
 
+    return HttpResponseRedirect(reverse('post-details', args=[post_id]))
+
+def favorite(request, post_id):
+    user = request.user
+    post = Post.objects.get(id=post_id)
+    profile = Profile.objects.get(user=user)
+    if profile.favorite.filter(id=post_id).exists():
+        profile.favorite.remove(post)
+    else:
+        profile.favorite.add(post)
     return HttpResponseRedirect(reverse('post-details', args=[post_id]))
