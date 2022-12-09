@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Tag, Stream, Follow, Post
-from .forms import NewPostForm
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
+from .models import Tag, Stream, Follow, Post, Like
+from .forms import NewPostForm
 # Create your views here.
 def index(request):
     user = request.user
@@ -41,3 +43,38 @@ def newPost(request):
         'form': form
     }
     return render(request, 'createpost.html', context)
+
+def postDetail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    context = {
+        'post': post,
+    }
+    return render(request, 'post-details.html', context)
+
+def tags(reqest, tag_slug):
+    tag = get_object_or_404(Tag, slug=tag_slug)
+    posts = Post.objects.fitler(tag-tag).order_by('-created_at')
+
+    context = {
+        'tags': tag,
+        'posts': posts
+    }
+
+    return render(request, 'tags.html', context)
+
+def like(request, post_id):
+    user = request.user
+    post = Post.objects.get(id=post_id)
+    current_likes = post.likes
+    liked = Like.objects.filter(user=user, post=post).count()
+
+    if not liked:
+        liked = Like.objects.create(user=user, post=post)
+        current_likes = current_likes + 1
+    else:
+        liked = Like.objects.filter(user=user, post=post).delete()
+        current_likes = current_likes - 1
+    post.likes = current_likes
+    post.save()
+
+    return HttpResponseRedirect(reverse('post-details', args=[post_id]))
