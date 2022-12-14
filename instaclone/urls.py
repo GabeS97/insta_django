@@ -17,9 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+
+from userauth.models import Profile
+from userauth.views import userProfile
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('post.urls')),
+
+    # Profile url section
+    path('<username>/', userProfile, name='profile'),
+    path('<favorites>/', userProfile, name='favorites')
 ]
 
 if settings.DEBUG:
