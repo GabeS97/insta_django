@@ -48,8 +48,11 @@
 
                     {% if profile.user != request.user %}
                     <br/>
-                    <a href="" class="btn profile-edit-btn" style="color: red; text-decoration: none ">Unfollow</a>
-                    <a href="" class="btn profile-edit-btn" style="color: green; text-decoration: none; ">Follow</a>
+                    {% if follow_status == True %}
+                    <a href="{%  url 'follow' profile.user 0 %}" class="btn profile-edit-btn" style="color: red; text-decoration: none ">Unfollow</a>
+                    {% else %}
+                    <a href="{%  url 'follow' profile.user 1 %}" class="btn profile-edit-btn" style="color: green; text-decoration: none; ">Follow</a>
+                    {% endif %}
                     <a href="" class="btn profile-edit-btn" style="text-decoration: none; ">Message</a>
                     {% endif %}
                 </div>
