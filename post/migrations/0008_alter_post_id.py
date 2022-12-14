@@ -7,13 +7,13 @@ import uuid
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('post', '0006_alter_post_id'),
+        ('post', '0007_alter_post_id'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='post',
             name='id',
-            field=models.UUIDField(default=uuid.UUID('09ae8272-d0fb-456e-a39d-1ea0d703e0ee'), editable=False, primary_key=True, serialize=False),
+            field=models.UUIDField(default=uuid.UUID('9c6d88e8-78a0-423d-80b5-5b42a04e6841'), editable=False, primary_key=True, serialize=False),
         ),
     ]

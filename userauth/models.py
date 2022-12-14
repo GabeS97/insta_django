@@ -6,15 +6,14 @@ from post.models import Post
 def user_directory_path(instance, filename):
     return 'user_{0}/{1}'.format(instance.user.id, filename)
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='Profile')
-    first_name = models.CharField(max_length=255, null=True, blank=True)
-    last_name = models.CharField(max_length=255, null=True, blank=True)
-    location = models.CharField(max_length=255, null=True, blank=True)
-    url = models.CharField(max_length=1000, null=True, blank=True)
-    profile_info = models.TextField(max_length=255, null=True, blank=True)
-    created_at = models.DateField(auto_now_add=True)
-    favorite = models.ManyToManyField(Post)
-    image = models.ImageField(upload_to=user_directory_path, blank=True, null=True, verbose_name='Profile Image')
+    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="profile_pciture", null=True, default="default.jpg")
+    first_name = models.CharField(max_length=200, null=True, blank=True)
+    last_name = models.CharField(max_length=200, null=True, blank=True)
+    bio = models.CharField(max_length=200, null=True, blank=True)
+    location = models.CharField(max_length=200, null=True, blank=True)
+    url = models.URLField(max_length=200, null=True, blank=True)
+    favorite = models.ManyToManyField(Post, blank=True)
 
     def __str__(self):
-        return self.user.username
+        return self.first_name + ' ' + self.last_name
