@@ -38,27 +38,28 @@
 
                 <div class="profile-user-settings">
 
-                    <h1 class="profile-user-name">{{profile.first_name}} {{profile.last_name}}</h1>
+                    <h6 class="profile-user-name">{{profile.first_name}} {{profile.last_name}}</h6>
                     <br/>
-                    <h5 style="font-size: 15px;" class="profile-user-name">@{{profile.user.username}}</h5>
-                    <button class="btn profile-edit-btn">Edit Profile</button>
-
+                    <h5 style="font-size: 15px;" class="profile-user-name">@{{profile.user}}</h5>
+                    {% if profile.user == request.user %}
+                    <a class="btn profile-edit-btn">Edit Profile</a>
+                    {% endif %}
                     <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
 
+                    {% if profile.user != request.user %}
                     <br/>
-
                     <a href="" class="btn profile-edit-btn" style="color: red; text-decoration: none ">Unfollow</a>
                     <a href="" class="btn profile-edit-btn" style="color: green; text-decoration: none; ">Follow</a>
                     <a href="" class="btn profile-edit-btn" style="text-decoration: none; ">Message</a>
-
+                    {% endif %}
                 </div>
 
                 <div class="profile-stats">
 
                     <ul>
-                        <li><span class="profile-stat-count">164</span> posts</li>
-                        <li><span class="profile-stat-count">300k</span> followers</li>
-                        <li><span class="profile-stat-count">206</span> following</li>
+                        <li><span class="profile-stat-count">{{ post_count }}</span> posts</li>
+                        <li><span class="profile-stat-count">{{ follower_count }}</span> followers</li>
+                        <li><span class="profile-stat-count">{{ following_count }}</span> following</li>
                     </ul>
 
                 </div>
